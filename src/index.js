@@ -9,26 +9,21 @@ import routes from './routes/index';
 const app = express();
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// db connection test
-pool.connect((err) => {
-  if (err) {
-    console.error("Error connecting: ", err);
-    return;
-  }
-  console.log("db connection successful");
-});
-/*
-pool.query("INSERT INTO users(first_name,last_name,email,master_password) VALUES(?,?,?,?)",["pedro","gomez","123@mail"],(error,result)=>{
-  if (error) throw error;
-  console.log(result);
-})
-*/
 //middleware
 app.use(express.json());
 app.use(cors());
-
+//routes
 app.use(routes.unprotectedRoutes)
 
-app.listen(development.PORT, (req, res) => {
-  console.log("LOCALHOST, PORT: " + development.PORT);
+//run server
+app.listen(development.PORT, async(req, res) => {
+  try{
+    console.log("LOCALHOST, PORT: " + development.PORT);
+    // db connection test
+    const connection = await pool.getConnection();
+    console.log("db connection successful");
+    connection.release();
+  } catch (err) {
+    console.log(err);
+  }
 });
