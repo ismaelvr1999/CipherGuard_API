@@ -3,7 +3,8 @@ import httpStatus from 'http-status';
 import  userControllers from '../../controllers/userControllers'
 const router = express.Router();
 
-router.post('/user',userControllers.signUp);
+router.post('/user/sign-up',userControllers.signUp);
+router.get('/user/:userid',userControllers.getUser);
 
 
 export default router;

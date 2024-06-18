@@ -9,4 +9,14 @@ const signUp = async (req, res) => {
   }
 };
 
-export default { signUp };
+const getUser = async (req, res) => {
+  try {
+    const id = req.params.userid;
+    const result = await userServices.getUser(id);
+    return res.status(result.status).send(result);
+  } catch (exception) {
+    return res.status(exception.status).send(exception);
+  }
+};
+
+export default { signUp,getUser };
