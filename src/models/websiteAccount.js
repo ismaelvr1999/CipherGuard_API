@@ -1,6 +1,7 @@
 import pool from "../db/pool";
 import crypto from "crypto";
 import MessageResponse from "../models/messageResponse";
+import httpStatus from "http-status";
 
 class websiteAccount {
 
@@ -22,10 +23,11 @@ class websiteAccount {
         //const hashedPassword = bcrypt.hashSync(newUser.password,development.SALT_ROUNDS)
         const [result] = 
         await pool.query("INSERT website_accounts(page_id,user_id,page_name,email,category,commentary,password) VALUES (?,?,?,?,?,?,?)",
-        [id,websiteAccount.user_id,websiteAccount.page_name,websiteAccount.email,websiteAccount.category,websiteAccount.commentary,websiteAccount.password])
+        [id,websiteAccount.user_id,websiteAccount.page_name,websiteAccount.email,
+          websiteAccount.category,websiteAccount.commentary,websiteAccount.password])
         return result;
     } catch (exception) {
-        throw new MessageResponse(httpStatus.BAD_REQUEST, "Missing required fields");
+        throw new MessageResponse(httpStatus.BAD_REQUEST, httpStatus["400_MESSAGE"]);
     }
   }
 }
