@@ -15,4 +15,19 @@ const addWebsiteAccount = async(RequestBody)=>{
 
 }
 
-export default {addWebsiteAccount}
+const getAllWebsiteAccounts = async(RequestBody)=>{
+    const websiteAccountModel = new websiteAccount();
+
+    const result = await websiteAccountModel.getAllWebsiteAccounts(RequestBody);
+    return new MessageResponse(httpStatus.OK,httpStatus["200_MESSAGE"],result)
+}
+
+const getWebsiteAccount = async(page_id,user_id)=>{
+    const websiteAccountModel = new websiteAccount();
+
+    const result = await websiteAccountModel.getWebsiteAccount(page_id,user_id);
+    return new MessageResponse(httpStatus.OK,httpStatus["200_MESSAGE"],result[0])
+}
+
+
+export default {addWebsiteAccount,getAllWebsiteAccounts,getWebsiteAccount}
