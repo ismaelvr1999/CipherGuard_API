@@ -10,8 +10,11 @@ const app = express();
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //middleware
+let corsOptions = {
+  origin: 'http://localhost:3001'
+}
+app.use(cors(corsOptions));
 app.use(express.json());
-app.use(cors());
 //routes
 app.use(routes.unprotectedRoutes)
 
