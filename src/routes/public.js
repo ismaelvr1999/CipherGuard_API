@@ -12,4 +12,7 @@ router.use(process.env.BASE_URL,websiteAccountRoutes);
 import loginRoutes from './api/loginRoutes'
 router.use(process.env.BASE_URL,loginRoutes)
 
+import verifyTokenRoutes from './api/verifyTokenRoutes'
+router.use(process.env.BASE_URL,verifyTokenRoutes)
+
 export default router;
