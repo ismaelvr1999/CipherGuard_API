@@ -43,17 +43,34 @@ class websiteAccount {
     }
   }
   async getWebsiteAccount(page_id,user_id) {
+    console.log(user_id);
+    console.log(page_id);
     const [result] = await pool.query(
       "SELECT * FROM website_accounts WHERE page_id = ? AND user_id = ?",
       [page_id,user_id]
     );
     if (result.length == 0) {
+      console.log(result);
       throw new MessageResponse(
         httpStatus.BAD_REQUEST,
         httpStatus["400_MESSAGE"]
       );
     }
     return result;
+  }
+
+  async getTotalWebAccountsByUser(user_id){
+      const [result] = await pool.query("SELECT COUNT(*) as total FROM website_accounts WHERE user_id = ?",[user_id]);
+      if (result.length == 0) {
+        console.log(result);
+        throw new MessageResponse(
+          httpStatus.BAD_REQUEST,
+          httpStatus["400_MESSAGE"]
+        );
+      }
+      return result;
+    
+
   }
 }
 export default websiteAccount;

@@ -12,7 +12,8 @@ const authUser = ( req,res,next)=>{
         return res.status(messageResponse.status).send(messageResponse);
     }
     const decoded = jwt.verify(token,development.SECRET_KEY);
-    req.user = decoded;
+    //console.log(decoded.email)
+    req.user = {...decoded};
     next();
     }
     catch(exception){

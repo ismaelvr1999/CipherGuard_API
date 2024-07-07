@@ -13,7 +13,7 @@ const login = async (userCredentials)=>{
         throw new MessageResponse(httpStatus.BAD_REQUEST,httpStatus['400_MESSAGE']);
     }
     else{
-        const user = await userModel.getUser(result[0].user_id);
+        const user = await userModel.getUser(result[0].email);
         const token = jsw.sign(user[0],development.SECRET_KEY,{ expiresIn: '12h' });
         return new MessageResponse(httpStatus.OK,httpStatus['200_MESSAGE'],{token:token});
     }

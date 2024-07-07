@@ -25,10 +25,10 @@ class user {
     }
   }
 
-  async getUser(id) {
+  async getUser(email) {
     const [result] = await pool.query(
-      "SELECT user_id,first_name,last_name,email FROM users WHERE user_id = ?",
-      [id]
+      "SELECT user_id,first_name,last_name,email FROM users WHERE email = ?",
+      [email]
     );
     if (result.length == 0) {
       throw new MessageResponse(
@@ -40,7 +40,7 @@ class user {
   }
 
   async login(email) {
-    const [result] = await pool.query("SELECT user_id,master_password FROM users WHERE email = ?", [
+    const [result] = await pool.query("SELECT email,master_password FROM users WHERE email = ?", [
       email,
     ]);
     if (result.length == 0) {

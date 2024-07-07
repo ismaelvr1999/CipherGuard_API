@@ -11,11 +11,11 @@ const signUp = async (req, res) => {
 
 const getUser = async (req, res) => {
   try {
-    const id = req.params.userid;
+    const id = req.user.email;
     const result = await userServices.getUser(id);
-    return res.status(result.status).send(result);
+    return res.status(200).send(result);
   } catch (exception) {
-    return res.status(exception.status).send(exception);
+    return res.status(400).send(exception.message);
   }
 };
 
