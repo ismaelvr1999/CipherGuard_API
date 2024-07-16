@@ -6,7 +6,7 @@ import httpStatus from "http-status";
 class websiteAccount {
   async getAllWebsiteAccounts(user_id) {
     const [result] = await pool.query(
-      "SELECT * FROM website_accounts WHERE user_id = ?",
+      "SELECT * FROM website_accounts WHERE user_id = ? ORDER BY creation_date DESC",
       [user_id]
     );
     if (result.length == 0) {
