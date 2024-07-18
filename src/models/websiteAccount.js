@@ -75,7 +75,13 @@ class websiteAccount {
     const sql = `UPDATE website_accounts  SET ? WHERE page_id = ? AND user_id = ?  `;
     const [result] = await pool.query(sql,[websiteAccount,websiteAccount.page_id,user_id]);
     return result;
-}
+  }
+
+  async deleteWebAccount(page_id,user_id){
+    const sql = 'DELETE FROM website_accounts WHERE page_id = ? AND user_id = ?  ';
+    const [result] = await pool.query(sql,[page_id,user_id]);
+    return result;
+  }
 
 }
 export default websiteAccount;

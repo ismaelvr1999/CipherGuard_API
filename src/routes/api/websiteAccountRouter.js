@@ -12,6 +12,7 @@ router.get('/website-account/:page_id',websiteAccountControllers.getWebsiteAccou
 
 router.post('/website-account',websiteAccountControllers.addWebsiteAccount);
 router.put("/website-account",websiteAccountControllers.updateWebAccount);
+router.delete("/website-account/:page_id",websiteAccountControllers.deleteWebAccount);
 
 
 

@@ -43,11 +43,23 @@ const getTotalWebAccountsByUser = async(req,res)=>{
 
 const updateWebAccount = async(req,res)=>{
   try {
-    const {user_id} = req.user
+    const {user_id} = req.user;
     const result = await websiteAccountServices.updateWebAccount(req.body,user_id);
     return res.status(result.status).send(result);
   } catch (exception) {
-    return res.status(exception.status).send(exception.message);
+    return res.status(exception.status).send(exception);
+  }
+
+}
+
+const deleteWebAccount = async(req,res)=>{
+  try {
+    const {user_id} = req.user;
+    const {page_id} = req.params;
+    const result = await websiteAccountServices.deleteWebAccount(page_id,user_id);
+    return res.status(result.status).send(result);
+  } catch (exception) {
+    return res.status(exception.status).send(exception);
   }
 
 }
@@ -57,4 +69,6 @@ export default {
   getAllWebsiteAccounts,
   getWebsiteAccount,
   getTotalWebAccountsByUser,
-  updateWebAccount}
+  updateWebAccount,
+  deleteWebAccount
+}
