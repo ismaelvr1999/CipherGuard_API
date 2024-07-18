@@ -73,6 +73,13 @@ const deleteWebAccount = async (page_id, user_id) => {
     });
   }
 };
+
+const searchWebAccount = async (searchValue,user_id) => {
+  const websiteAccountModel = new websiteAccount();
+  const result = await websiteAccountModel.searchWebAccount(searchValue,user_id);
+  const message = result.length === 0 ?"Results no found":httpStatus["200_MESSAGE"] ;
+  return new MessageResponse(httpStatus.OK, message, result);
+};
 export default {
   addWebsiteAccount,
   getAllWebsiteAccounts,
@@ -80,4 +87,5 @@ export default {
   getTotalWebAccountsByUser,
   updateWebAccount,
   deleteWebAccount,
+  searchWebAccount
 };

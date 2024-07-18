@@ -83,5 +83,13 @@ class websiteAccount {
     return result;
   }
 
+  async searchWebAccount(searchValue,user_id){
+    const sqlLike = `LIKE '%${searchValue}%'`;
+    const sqlWhere = `(page_name ${sqlLike} OR email ${sqlLike} OR category ${sqlLike} OR  user_name ${sqlLike}) AND  user_id = '${user_id}'`;
+    const sql = `SELECT * FROM website_accounts WHERE ${sqlWhere}`;   
+    const [result] =  await pool.query(sql);
+    return result; 
+  }
+
 }
 export default websiteAccount;
