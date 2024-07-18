@@ -23,7 +23,7 @@ class websiteAccount {
       const id = crypto.randomUUID();
       //const hashedPassword = bcrypt.hashSync(newUser.password,development.SALT_ROUNDS)
       const [result] = await pool.query(
-        "INSERT website_accounts(page_id,user_id,page_name,email,category,commentary,password) VALUES (?,?,?,?,?,?,?)",
+        "INSERT website_accounts(page_id,user_id,page_name,email,category,commentary,password,user_name) VALUES (?,?,?,?,?,?,?,?)",
         [
           id,
           websiteAccount.user_id,
@@ -32,6 +32,7 @@ class websiteAccount {
           websiteAccount.category,
           websiteAccount.commentary,
           websiteAccount.password,
+          websiteAccount.user_name
         ]
       );
       return result;
@@ -43,8 +44,7 @@ class websiteAccount {
     }
   }
   async getWebsiteAccount(page_id,user_id) {
-    console.log(user_id);
-    console.log(page_id);
+
     const [result] = await pool.query(
       "SELECT * FROM website_accounts WHERE page_id = ? AND user_id = ?",
       [page_id,user_id]
@@ -69,8 +69,13 @@ class websiteAccount {
         );
       }
       return result;
-    
-
   }
+
+  async updateWebAccount(websiteAccount,user_id){
+    const sql = `UPDATE website_accounts  SET ? WHERE page_id = ? AND user_id = ?  `;
+    const [result] = await pool.query(sql,[websiteAccount,websiteAccount.page_id,user_id]);
+    return result;
+}
+
 }
 export default websiteAccount;

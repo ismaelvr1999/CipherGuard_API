@@ -33,6 +33,20 @@ const getTotalWebAccountsByUser = async(user_id)=>{
     const total = await websiteAccountModel.getTotalWebAccountsByUser(user_id);
     return new MessageResponse(httpStatus.OK,httpStatus["200_MESSAGE"],total[0])
 }
+const updateWebAccount = async(websiteAccountRequest,user_id) =>{
+    const websiteAccountModel = new websiteAccount();
+    const result = await websiteAccountModel.updateWebAccount(websiteAccountRequest,user_id);
+    if(result.affectedRows === 1){
+        return new MessageResponse(httpStatus.OK,result.info,{affectedRows:result["affectedRows"]})
+    }
+    else{
+        throw new MessageResponse(httpStatus.BAD_REQUEST,result.info,{affectedRows:result["affectedRows"]})
+    }
+}
 
-
-export default {addWebsiteAccount,getAllWebsiteAccounts,getWebsiteAccount,getTotalWebAccountsByUser}
+export default {
+    addWebsiteAccount,
+    getAllWebsiteAccounts,
+    getWebsiteAccount,
+    getTotalWebAccountsByUser,
+    updateWebAccount}

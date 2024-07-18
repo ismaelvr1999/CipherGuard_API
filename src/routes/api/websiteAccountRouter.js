@@ -11,6 +11,7 @@ router.get('/website-account/total',websiteAccountControllers.getTotalWebAccount
 router.get('/website-account/:page_id',websiteAccountControllers.getWebsiteAccount);
 
 router.post('/website-account',websiteAccountControllers.addWebsiteAccount);
+router.put("/website-account",websiteAccountControllers.updateWebAccount);
 
 
 

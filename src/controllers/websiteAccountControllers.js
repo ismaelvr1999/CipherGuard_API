@@ -41,4 +41,20 @@ const getTotalWebAccountsByUser = async(req,res)=>{
 
 }
 
-export default {addWebsiteAccount,getAllWebsiteAccounts,getWebsiteAccount,getTotalWebAccountsByUser}
+const updateWebAccount = async(req,res)=>{
+  try {
+    const {user_id} = req.user
+    const result = await websiteAccountServices.updateWebAccount(req.body,user_id);
+    return res.status(result.status).send(result);
+  } catch (exception) {
+    return res.status(exception.status).send(exception.message);
+  }
+
+}
+
+export default {
+  addWebsiteAccount,
+  getAllWebsiteAccounts,
+  getWebsiteAccount,
+  getTotalWebAccountsByUser,
+  updateWebAccount}
