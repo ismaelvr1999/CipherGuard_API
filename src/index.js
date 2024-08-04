@@ -12,7 +12,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 //middleware
 let corsOptions = {
   origin: 'http://localhost:3001'
-}
+};
 app.use(cors(corsOptions));
 app.use(express.json());
 //routes
