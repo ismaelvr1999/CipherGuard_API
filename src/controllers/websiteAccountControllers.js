@@ -15,8 +15,10 @@ const getAllWebsiteAccounts = async (req, res) => {
   try {
     const {user_id} = req.user
     let result = null;
+
     if(req.query.search) result = await websiteAccountServices.searchWebAccount(req.query.search,user_id)
     else result = await websiteAccountServices.getAllWebsiteAccounts(user_id);
+  
     return res.status(result.status).send(result);
   } catch (exception) {
     return res.status(exception.status).send(exception);

@@ -76,7 +76,7 @@ class websiteAccount {
 
   async updateWebAccount(websiteAccount, user_id) {
     try {
-      const sql = `UPDATE website_accounts  SET ? WHERE page_id = ? AND user_id = ?  `;
+      const sql = `UPDATE website_accounts  SET ? , last_modification = CURRENT_TIMESTAMP() WHERE page_id = ? AND user_id = ?  `;
       const [result] = await pool.query(sql, [
         websiteAccount,
         websiteAccount.page_id,
