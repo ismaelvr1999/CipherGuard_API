@@ -31,9 +31,9 @@ const websiteAccountValidationSchema = {
           "online_shopping",
           "streaming_platform",
           "other",
-        ],
-      ],
-    },
+        ]
+      ]
+    }
   },
   commentary: {
     in: ["body"],
