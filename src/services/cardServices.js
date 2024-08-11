@@ -15,10 +15,16 @@ const getAllCards = async(user_id)=>{
     return new MessageResponse(httpStatus.OK,httpStatus["200_MESSAGE"],result);
 }
 
+const getCard = async(card_id,user_id)=>{
+  const cardModel = new card();
+  const result = await cardModel.getCard(card_id,user_id);
+  return new MessageResponse(httpStatus.OK,httpStatus["200_MESSAGE"],result[0]);
+}
+
 const getTotalCardsByUser = async(user_id)=>{
     const cardModel = new card();
     const result = await cardModel.getTotalCardsByUser(user_id);
-    return new MessageResponse(httpStatus.OK,httpStatus["200_MESSAGE"],result);
+    return new MessageResponse(httpStatus.OK,httpStatus["200_MESSAGE"],result[0]);
 }
 
 const updateCard = async (cardRequest, user_id) => {
@@ -66,5 +72,6 @@ export default {
     getTotalCardsByUser,
     updateCard,
     deleteCard,
-    searchCard
+    searchCard,
+    getCard
 }

@@ -14,6 +14,8 @@ router.use("/cards", authMiddleware.authUser);
 
 router.get("/cards", cardControllers.getAllCards);
 router.get("/cards/total", cardControllers.getTotalCardsByUser);
+router.get("/cards/:card_id",cardControllers.getCard);
+
 router.post(
   "/cards",
   checkSchema(addcardValidationSchema),

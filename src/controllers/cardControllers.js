@@ -34,6 +34,17 @@ const getAllCards = async (req, res) => {
   }
 };
 
+const getCard = async (req,res) =>{
+  try {
+    const {user_id} = req.user;
+    const {card_id} = req.params;
+    const result = await cardServices.getCard(card_id,user_id);
+    return res.status(result.status).send(result);
+  } catch (exception) {
+    return res.status(exception.status).send(exception);
+  }
+}
+
 const getTotalCardsByUser = async (req, res) => {
   try {
     const { user_id } = req.user;
@@ -82,5 +93,6 @@ export default {
     getAllCards,
     getTotalCardsByUser,
     updateCard,
-    deleteCard
+    deleteCard,
+    getCard
 }

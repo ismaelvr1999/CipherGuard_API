@@ -25,7 +25,7 @@ class card {
 
   async getAllCards(user_id){
     try {
-      const sql = "SELECT * FROM cards WHERE user_id = ?";
+      const sql = "SELECT * FROM cards WHERE user_id = ? ORDER BY create_date DESC";
       const [result] = await pool.query(sql, [user_id]);
 
       return result;
@@ -34,13 +34,28 @@ class card {
         throw new MessageResponse(httpStatus.INTERNAL_SERVER_ERROR,httpStatus["500_MESSAGE"]);
     }
   }
+  async getCard(card_id, user_id) {
+    try {
+      const [result] = await pool.query(
+        "SELECT * FROM cards WHERE card_id = ? AND user_id = ?",
+        [card_id, user_id]
+      );
+      return result;
+    } catch (exception) {
+      throw new MessageResponse(
+        httpStatus.INTERNAL_SERVER_ERROR,
+        httpStatus["500_MESSAGE"]
+      );
+    }
+  }
 
   async getTotalCardsByUser(user_id) {
     try {
       const [result] = await pool.query(
-        "SELECT COUNT(*) as total FROM cards WHERE user_id = ?",
+        "SELECT COUNT(*) as total FROM cards WHERE user_id = ? ",
         [user_id]
       );
+      
       return result;
     } catch (exception) {
       throw new MessageResponse(
