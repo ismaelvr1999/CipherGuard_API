@@ -1,7 +1,6 @@
 import express from 'express';
 require('dotenv').config();
 const router = express.Router();
-import authMiddleware from '../middleware/authMiddleware';
 
 import userRoutes from './api/userRoutes';
 router.use(process.env.BASE_URL, userRoutes);
@@ -18,5 +17,7 @@ router.use(process.env.BASE_URL,verifyTokenRoutes);
 import cardRoutes from './api/cardRoutes';
 router.use(process.env.BASE_URL,cardRoutes);
 
+import passportRoutes from './api/passportRoutes';
+router.use(process.env.BASE_URL,passportRoutes);
 
 export default router;
