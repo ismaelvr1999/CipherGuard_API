@@ -639,6 +639,14 @@
             "required": true,
             "type": "string",
             "description": "Bearer token for authorization."
+          },
+
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Search term to filter website accounts."
           }
         ],
         "responses": {
@@ -1112,6 +1120,724 @@
                   "properties": {
                     "total": {
                       "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid credentials."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cards": {
+      "get": {
+        "summary": "Retrieve Cards",
+        "tags":["Cards"],
+        "description": "Retrieves a list of cards associated with the authenticated user.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authorization."
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Search term to filter cards."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cards retrieved successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "card_id": {
+                        "type": "string"
+                      },
+                      "user_id": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "cardholder_name": {
+                        "type": "string"
+                      },
+                      "expiration_date": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "cvv": {
+                        "type": "string"
+                      },
+                      "issuer": {
+                        "type": "string"
+                      },
+                      "commentary": {
+                        "type": "string"
+                      },
+                      "create_date": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "last_modification": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid credentials."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a New Card",
+        "tags":["Cards"],
+        "description": "Creates a new card associated with the authenticated user.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authorization."
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "description": "Type of the card (e.g., credit_card, debit_card)."
+                },
+                "cardholder_name": {
+                  "type": "string",
+                  "description": "Name of the cardholder."
+                },
+                "expiration_date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "Expiration date of the card in YYYY-MM-DD format."
+                },
+                "cvv": {
+                  "type": "string",
+                  "description": "CVV code of the card."
+                },
+                "issuer": {
+                  "type": "string",
+                  "description": "Issuer of the card (e.g., bank name)."
+                }
+              },
+              "required": ["type", "cardholder_name", "expiration_date", "cvv", "issuer"]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Card created successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "example":null,
+                  "description": "No additional data returned."
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "There was an error with your request. Please check your input and try again."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "field_name": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        },
+                        "msg": {
+                          "type": "string"
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "location": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid credentials."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cards/total": {
+      "get": {
+        "summary": "Retrieve Total Number of Cards",
+        "tags":["Cards"],
+        "description": "Retrieves the total number of cards associated with the authenticated user.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authorization."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Total number of cards retrieved successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid credentials."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cards/{card_id}": {
+      "put": {
+        "summary": "Update an Existing Card",
+        "tags":["Cards"],
+        "description": "Updates the details of an existing card associated with the authenticated user.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authorization."
+          },
+          {
+            "name": "card_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Unique identifier of the card to be updated."
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "description": "Type of the card (e.g., credit_card, debit_card)."
+                },
+                "cardholder_name": {
+                  "type": "string",
+                  "description": "Name of the cardholder."
+                },
+                "expiration_date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "Expiration date of the card in YYYY-MM-DD format."
+                },
+                "cvv": {
+                  "type": "string",
+                  "description": "CVV code of the card."
+                },
+                "issuer": {
+                  "type": "string",
+                  "description": "Issuer of the card (e.g., bank name)."
+                }
+              },
+              "required": ["type", "cardholder_name", "expiration_date", "cvv", "issuer"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Card updated successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "affectedRows": {
+                      "type": "integer",
+                      "example":1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "There was an error with your request. Please check your input and try again."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "field_name": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        },
+                        "msg": {
+                          "type": "string"
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "location": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid credentials."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Retrieve a Specific Card",
+        "tags":["Cards"],
+        "description": "Retrieves the details of a specific card associated with the authenticated user.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authorization."
+          },
+          {
+            "name": "card_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Unique identifier of the card to be retrieved."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Card retrieved successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "card_id": {
+                      "type": "string",
+                      "description": "Unique identifier of the card."
+                    },
+                    "user_id": {
+                      "type": "string",
+                      "description": "Unique identifier of the user associated with the card."
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "Type of the card (e.g., credit_card, debit_card)."
+                    },
+                    "cardholder_name": {
+                      "type": "string",
+                      "description": "Name of the cardholder."
+                    },
+                    "expiration_date": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Expiration date of the card."
+                    },
+                    "cvv": {
+                      "type": "string",
+                      "description": "CVV code of the card."
+                    },
+                    "issuer": {
+                      "type": "string",
+                      "description": "Issuer of the card (e.g., bank name)."
+                    },
+                    "commentary": {
+                      "type": "string",
+                      "description": "Additional notes or commentary regarding the card."
+                    },
+                    "create_date": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Date the card was created."
+                    },
+                    "last_modification": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Date the card details were last modified."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid credentials."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a Specific Card",
+        "tags":["Cards"],
+        "description": "Deletes a specific card associated with the authenticated user.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authorization."
+          },
+          {
+            "name": "card_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Unique identifier of the card to be deleted."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Card deleted successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "affectedRows": {
+                      "type": "integer",
+                      "example":1,
+                      "description": "Number of rows affected by the deletion."
                     }
                   }
                 }
