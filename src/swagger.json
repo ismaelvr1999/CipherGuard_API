@@ -1886,6 +1886,821 @@
           }
         }
       }
+    },
+    "/passports": {
+      "get": {
+        "summary": "Retrieve All Passports",
+        "tags":["Passports"],
+        "description": "Retrieves a list of all passports associated with the authenticated user.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authorization."
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "Search term to filter passports."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Passports retrieved successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "passport_id": {
+                        "type": "string",
+                        "description": "Unique identifier of the passport."
+                      },
+                      "user_id": {
+                        "type": "string",
+                        "description": "Unique identifier of the user associated with the passport."
+                      },
+                      "first_name": {
+                        "type": "string",
+                        "description": "First name of the passport holder."
+                      },
+                      "last_name": {
+                        "type": "string",
+                        "description": "Last name of the passport holder."
+                      },
+                      "passport_number": {
+                        "type": "string",
+                        "description": "Passport number."
+                      },
+                      "nationality": {
+                        "type": "string",
+                        "description": "Nationality of the passport holder."
+                      },
+                      "date_of_birth": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Date of birth of the passport holder."
+                      },
+                      "issue_date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Date the passport was issued."
+                      },
+                      "expiration_date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Expiration date of the passport."
+                      },
+                      "status": {
+                        "type": "string",
+                        "description": "Current status of the passport (e.g., expired, valid)."
+                      },
+                      "commentary": {
+                        "type": "string",
+                        "description": "Additional notes or commentary regarding the passport."
+                      },
+                      "create_date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Date the passport record was created."
+                      },
+                      "last_modification": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Date the passport record was last modified."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid credentials."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a New Passport",
+        "tags":["Passports"],
+        "description": "Creates a new passport associated with the authenticated user.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authorization."
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "first_name": {
+                  "type": "string",
+                  "description": "First name of the passport holder."
+                },
+                "last_name": {
+                  "type": "string",
+                  "description": "Last name of the passport holder."
+                },
+                "passport_number": {
+                  "type": "string",
+                  "description": "Unique passport number."
+                },
+                "nationality": {
+                  "type": "string",
+                  "description": "Nationality of the passport holder."
+                },
+                "date_of_birth": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "Date of birth of the passport holder."
+                },
+                "issue_date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "Date the passport was issued."
+                },
+                "expiration_date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "Expiration date of the passport."
+                },
+                "status": {
+                  "type": "string",
+                  "description": "Current status of the passport (e.g., valid, expired)."
+                },
+                "commentary": {
+                  "type": "string",
+                  "description": "Additional notes or commentary regarding the passport."
+                }
+              },
+              "required": [
+                "first_name",
+                "last_name",
+                "passport_number",
+                "nationality",
+                "date_of_birth",
+                "issue_date",
+                "expiration_date",
+                "status"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Passport created successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of passports associated with the user after creation."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "There was an error with your request. Please check your input and try again."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "field_name": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        },
+                        "msg": {
+                          "type": "string"
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "location": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid credentials."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/passports/{passport_id}": {
+      "get": {
+        "summary": "Retrieve a Specific Passport",
+        "tags":["Passports"],
+        "description": "Retrieves details of a specific passport associated with the authenticated user.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authorization."
+          },
+          {
+            "name": "passport_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Unique identifier of the passport to be retrieved."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Passport retrieved successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "passport_id": {
+                      "type": "string",
+                      "description": "Unique identifier of the passport."
+                    },
+                    "user_id": {
+                      "type": "string",
+                      "description": "Unique identifier of the user associated with the passport."
+                    },
+                    "first_name": {
+                      "type": "string",
+                      "description": "First name of the passport holder."
+                    },
+                    "last_name": {
+                      "type": "string",
+                      "description": "Last name of the passport holder."
+                    },
+                    "passport_number": {
+                      "type": "string",
+                      "description": "Passport number."
+                    },
+                    "nationality": {
+                      "type": "string",
+                      "description": "Nationality of the passport holder."
+                    },
+                    "date_of_birth": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Date of birth of the passport holder."
+                    },
+                    "issue_date": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Date the passport was issued."
+                    },
+                    "expiration_date": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Expiration date of the passport."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Current status of the passport (e.g., expired, valid)."
+                    },
+                    "commentary": {
+                      "type": "string",
+                      "description": "Additional notes or commentary regarding the passport."
+                    },
+                    "create_date": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Date the passport record was created."
+                    },
+                    "last_modification": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Date the passport record was last modified."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid credentials."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an Existing Passport",
+        "tags":["Passports"],
+        "description": "Updates the details of an existing passport associated with the authenticated user.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authorization."
+          },
+          {
+            "name": "passport_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Unique identifier of the passport to be updated."
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "first_name": {
+                  "type": "string",
+                  "description": "First name of the passport holder."
+                },
+                "last_name": {
+                  "type": "string",
+                  "description": "Last name of the passport holder."
+                },
+                "passport_number": {
+                  "type": "string",
+                  "description": "Unique passport number."
+                },
+                "nationality": {
+                  "type": "string",
+                  "description": "Nationality of the passport holder."
+                },
+                "date_of_birth": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "Date of birth of the passport holder."
+                },
+                "issue_date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "Date the passport was issued."
+                },
+                "expiration_date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "Expiration date of the passport."
+                },
+                "status": {
+                  "type": "string",
+                  "description": "Current status of the passport (e.g., valid, expired)."
+                },
+                "commentary": {
+                  "type": "string",
+                  "description": "Additional notes or commentary regarding the passport."
+                }
+              },
+              "required": [
+                "first_name",
+                "last_name",
+                "passport_number",
+                "nationality",
+                "date_of_birth",
+                "issue_date",
+                "expiration_date",
+                "status"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Passport updated successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "affectedRows": {
+                      "type": "integer",
+                      "description": "Number of rows affected by the update."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "There was an error with your request. Please check your input and try again."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "field_name": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        },
+                        "msg": {
+                          "type": "string"
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "location": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid credentials."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an Existing Passport",
+        "tags":["Passports"],
+        "description": "Deletes the passport associated with the authenticated user.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authorization."
+          },
+          {
+            "name": "passport_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Unique identifier of the passport to be deleted."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Passport deleted successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "affectedRows": {
+                      "type": "integer",
+                      "description": "Number of rows affected by the deletion."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid credentials."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/passports/total": {
+      "get": {
+        "summary": "Retrieve Total Number of Passports",
+        "tags":["Passports"],
+        "description": "Retrieves the total count of all passports associated with the authenticated user.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authorization."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Total number of passports retrieved successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer",
+                      "description": "Total number of passports associated with the user."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid credentials."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
