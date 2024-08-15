@@ -1,8 +1,1165 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "title": "PASSWORD WALLET API",
-      "version": "1.0.0",
-      "description": "API REST"
+  "swagger": "2.0",
+  "info": {
+    "title": "CipherGuard REST API",
+    "version": "1.0.0",
+    "description": "CipherGuard is a secure API designed for storing and managing sensitive information, including website passwords, credit and debit card details, and passport numbers."
+  },
+  "host": "localhost:3000",
+  "basePath": "/api",
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": [
+          "Login"
+        ],
+        "summary": "User Login",
+        "description": "Allows a user to log in using their email and password.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "format": "email",
+                  "example": "user@example.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "your_password"
+                }
+              },
+              "required": [
+                "email",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login successful.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Standard response for successful HTTP requests."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "There was an error with your request. Please check your input and try again."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "field_name": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        },
+                        "msg": {
+                          "type": "string"
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "location": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid credentials."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/sign-up": {
+      "post": {
+        "summary": "User Sign-Up",
+        "tags": [
+          "User"
+        ],
+        "description": "Allows a user to create a new account using their first name, last name, email, and password.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "your_password"
+                }
+              },
+              "required": [
+                "firstName",
+                "lastName",
+                "email",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User created successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 201
+                },
+                "message": {
+                  "type": "string",
+                  "example": "The request has been fulfilled, resulting in the creation of a new resource."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "firstName": {
+                      "type": "string",
+                      "example": "Juan"
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "example": "Chavez"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "juanchaves@gmail.com"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "There was an error with your request. Please check your input and try again."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "field_name": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        },
+                        "msg": {
+                          "type": "string"
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "location": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "summary": "Get User Information",
+        "tags": [
+          "User"
+        ],
+        "description": "Retrieves the user's information using the provided authorization token.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authorization.",
+            "example": "Bearer your_token_here"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User information retrieved successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "User found"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "user_id": {
+                      "type": "string"
+                    },
+                    "first_name": {
+                      "type": "string"
+                    },
+                    "last_name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid credentials."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/verify-token": {
+      "post": {
+        "summary": "Verify Token",
+        "tags":["Verify Token"],
+        "description": "Verifies the provided authorization token.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for verification.",
+            "example": "Bearer your_token_here"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Token verified successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 200
+                },
+                "message": {
+                  "type": "string",
+                  "example": "valid token"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "validity": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Token has expired.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "jwt expired"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "validity": {
+                      "type": "boolean",
+                      "example": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/websites-accounts": {
+      "post": {
+        "summary": "Create Website Account",
+        "tags":["Websites-Accounts"],
+        "description": "Creates a new website account with the provided details.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authorization.",
+            "example": "Bearer your_token_here"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "page_name": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "commentary": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "user_name": {
+                  "type": "string"
+                }
+              },
+              "required": ["page_name", "email", "category", "commentary", "password", "user_name"]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Website account created successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 201
+                },
+                "message": {
+                  "type": "string",
+                  "example": "The request has been fulfilled, resulting in the creation of a new resource."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "page_name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "category": {
+                      "type": "string"
+                    },
+                    "commentary": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "number",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "There was an error with your request. Please check your input and try again."
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "field_name": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        },
+                        "msg": {
+                          "type": "string"
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "location": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid credentials."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get Website Accounts",
+        "tags":["Websites-Accounts"],
+        "description": "Retrieves all website accounts associated with the authenticated user.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authorization."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Website accounts retrieved successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "page_id": {
+                        "type": "string"
+                      },
+                      "user_id": {
+                        "type": "string"
+                      },
+                      "page_name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string",
+                        "format": "email"
+                      },
+                      "category": {
+                        "type": "string"
+                      },
+                      "commentary": {
+                        "type": "string"
+                      },
+                      "creation_date": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "last_modification": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "password": {
+                        "type": "string"
+                      },
+                      "user_name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid credentials."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/websites-accounts/{page_id}": {
+      "get": {
+        "summary": "Get Website Account by Page ID",
+        "tags":["Websites-Accounts"],
+        "description": "Retrieves the website account associated with the provided page ID.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authorization."
+          },
+          {
+            "name": "page_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Unique identifier for the website account."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Website account retrieved successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "page_id": {
+                      "type": "string"
+                    },
+                    "user_id": {
+                      "type": "string"
+                    },
+                    "page_name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "category": {
+                      "type": "string"
+                    },
+                    "commentary": {
+                      "type": "string"
+                    },
+                    "creation_date": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "last_modification": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "password": {
+                      "type": "string"
+                    },
+                    "user_name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid credentials."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update Website Account by Page ID",
+        "tags":["Websites-Accounts"],
+        "description": "Updates the website account associated with the provided page ID.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authorization."
+          },
+          {
+            "name": "page_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Unique identifier for the website account."
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "page_name": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "commentary": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "user_name": {
+                  "type": "string"
+                }
+              },
+              "required": ["page_name", "email", "category", "commentary", "password", "user_name"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Website account updated successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "affectedRows": {
+                      "type": "integer",
+                      "example":1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. No rows matched or changed.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "affectedRows": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid credentials."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Website Account by Page ID",
+        "tags":["Websites-Accounts"],
+        "description": "Deletes the website account associated with the provided page ID.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authorization."
+          },
+          {
+            "name": "page_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Unique identifier for the website account."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Website account deleted successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "affectedRows": {
+                      "type": "integer",
+                      "example":1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid credentials."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/websites-accounts/total": {
+      "get": {
+        "summary": "Get Total Number of Website Accounts",
+        "tags":["Websites-Accounts"],
+        "description": "Retrieves the total number of website accounts associated with the authenticated user.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": "Bearer token for authorization."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Total number of website accounts retrieved successfully.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 401
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Invalid credentials."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal server error."
+                },
+                "data": {
+                  "type": "object",
+                  "example": null
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
+}
