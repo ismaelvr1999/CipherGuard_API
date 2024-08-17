@@ -1,12 +1,28 @@
 # CipherGuard REST API
 CipherGuard API securely stores and manages passwords, passports, and credit/debit card information.
-# Table of Contents
+# Table of Contents 📚
+- [Description 📝](#Description-)
+  - [Author](#Author)
+- [Technologies Used 🔧](#Technologies-Used-)
+- [Installation 📦](#Installation-)
+- [API Reference 📑](#API-Reference)
+  - [User Login](#User-Login)
+  - [User Sign-Up](#User-Sign-Up)
+  - [Get User Information](#Get-User-Information)
+  - [Verify Token](#Verify-Token)
+  - [Create Website Account](#Create-Website-Account)
+  - [Get Website Account by Page ID](#Get-Website-Account-by-Page-ID)
+  - [Update Website Account by Page ID](#Update-Website-Account-by-Page-ID)
+  - [Delete Website Account by Page ID](#Delete-Website-Account-by-Page-ID)
+  - [Get Total Number of Website Accounts](#Get-Total-Number-of-Website-Accounts)
+  - [Retrieve Cards](#Retrieve-Cards)
+  - [Create a New Card](#Create-a-New-Card)
+  - [Retrieve Total Number of Cards](#Retrieve-Total-Number-of-Cards)
+  - [Update, Retrieve, and Delete a Specific Card](#Update-Retrieve-and-Delete-a-Specific-Card)
+  - [Retrieve All Passports and Create a New Passport](#Retrieve-All-Passports-and-Create-a-New-Passport) 
+  - [Retrieve, Update, and Delete a Specific Passport](#Retrieve-Update-and-Delete-a-Specific-Passport)
+  - [Retrieve Total Number of Passports](#Retrieve-Total-Number-of-Passports)
 
-- [Description](#Description)
-  - [Author](##Author)
-- [Technologies Used](#Technologies-Used)
-- [Installation](#Installation)
-- [API Reference](#API-Reference)
 
 # Description 📝
 
@@ -26,7 +42,7 @@ This project utilizes the following technologies:
 - **MySQL2**: A robust relational database management system for storing data securely. 🗄️
 - **Bcrypt**: A library for hashing passwords to enhance security. 🔒
 - **CORS**: Middleware to handle Cross-Origin Resource Sharing, enabling secure resource sharing between different origins. 🌍
-# Installation ⚙️
+# Installation 📦
 
 To get started with this API, follow these steps:
 
@@ -56,7 +72,8 @@ Create a .env file in the root of the project and add the following variables:
 4. **Start the server.**
     ```bash
     npm run dev
-# API Reference
+   
+# API Reference 📑
 ## User Login
 
 ### HTTP Request
