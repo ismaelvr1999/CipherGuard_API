@@ -2,6 +2,8 @@ import pool from "../db/pool";
 import crypto from "crypto";
 import MessageResponse from "../models/messageResponse";
 import httpStatus from "http-status";
+import encrypt from "../utils/encrypt";
+import decrypt from "../utils/decrypt";
 
 class websiteAccount {
   async getAllWebsiteAccounts(user_id) {
@@ -22,7 +24,7 @@ class websiteAccount {
   async addWebsiteAccount(websiteAccount) {
     try {
       const id = crypto.randomUUID();
-
+      websiteAccount.password = encrypt(websiteAccount.password);
       const [result] = await pool.query(
         "INSERT website_accounts(page_id,user_id,page_name,email,category,commentary,password,user_name) VALUES (?,?,?,?,?,?,?,?)",
         [
@@ -50,6 +52,7 @@ class websiteAccount {
         "SELECT * FROM website_accounts WHERE page_id = ? AND user_id = ?",
         [page_id, user_id]
       );
+      result[0].password = decrypt(result[0].password)
       return result;
     } catch (exception) {
       throw new MessageResponse(
@@ -77,6 +80,7 @@ class websiteAccount {
   async updateWebAccount(websiteAccount, user_id) {
     try {
       const sql = `UPDATE website_accounts  SET ? , last_modification = CURRENT_TIMESTAMP() WHERE page_id = ? AND user_id = ?  `;
+      websiteAccount.password = encrypt(websiteAccount.password);
       const [result] = await pool.query(sql, [
         websiteAccount,
         websiteAccount.page_id,
