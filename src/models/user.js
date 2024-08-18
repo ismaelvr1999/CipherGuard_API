@@ -4,23 +4,30 @@ import httpStatus from "http-status";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
 import development from "../config/development";
+
 class user {
   async signUp(newUser) {
     try {
       const id = crypto.randomUUID();
       const hashedPassword = bcrypt.hashSync(
-        newUser.password,
+        newUser.master_password,
         development.SALT_ROUNDS
       );
       const [result] = await pool.query(
         "INSERT INTO users(user_id,first_name,last_name,email,master_password) VALUES(?,?,?,?,?)",
-        [id, newUser.firstName, newUser.lastName, newUser.email, hashedPassword]
+        [id, newUser.first_name, newUser.last_name, newUser.email, hashedPassword]
       );
       return result;
     } catch (exception) {
+      if(exception.code = "ER_DUP_ENTRY"){
+        throw new MessageResponse(
+          httpStatus.BAD_REQUEST,
+          exception.message
+        );
+      }
       throw new MessageResponse(
-        httpStatus.BAD_REQUEST,
-        "Missing required fields"
+        httpStatus.INTERNAL_SERVER_ERROR,
+        httpStatus["500_MESSAGE"]
       );
     }
   }
